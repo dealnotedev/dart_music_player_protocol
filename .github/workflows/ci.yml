@@ -1,0 +1,34 @@
+name: Dart CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Dart ${{ matrix.sdk }} on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            sdk: stable
+          - os: windows-latest
+            sdk: stable
+          - os: ubuntu-latest
+            sdk: '3.7.0'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: dart-lang/setup-dart@v1.8.1
+        with:
+          sdk: ${{ matrix.sdk }}
+      - run: dart pub get
+      - if: matrix.sdk == 'stable' && matrix.os == 'ubuntu-latest'
+        run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze --fatal-infos
+      - run: dart test
+      - run: dart run example/dart_music_player_protocol_example.dart

@@ -1,0 +1,12 @@
+name: dart_music_player_protocol
+description: Shared music player state, queue and control protocol with native HTTP/WebSocket client and server for Dart.
+version: 1.0.0
+publish_to: none
+repository: https://github.com/dealnotedev/dart_music_player_protocol
+issue_tracker: https://github.com/dealnotedev/dart_music_player_protocol/issues
+
+environment:
+  sdk: '>=3.7.0 <4.0.0'
+
+dev_dependencies:
+  test: ^1.25.0
